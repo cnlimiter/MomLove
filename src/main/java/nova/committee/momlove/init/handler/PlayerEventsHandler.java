@@ -1,7 +1,12 @@
 package nova.committee.momlove.init.handler;
 
+import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
+import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import nova.committee.momlove.Momlove;
+import nova.committee.momlove.init.callbacks.LivingEvents;
 import nova.committee.momlove.init.callbacks.PlayerEvents;
 
 import java.util.UUID;
@@ -15,24 +20,20 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 public class PlayerEventsHandler {
 
-    private static Inventory inventory = null;
 
     public static void init() {
 
-
-        PlayerEvents.PLAYER_DEATH.register((source, player) -> {
-            for (UUID id : Momlove.config.stream().toList()){
-                if (player.getUUID() == id){
-                   inventory = player.getInventory();
-                }
+        LivingEvents.LIVING_DROPS.register((entity, source, drops) -> {
+            if (entity instanceof Player player){
+                return Momlove.config.contains(player.getUUID());
             }
+            return false;
         });
 
-        PlayerEvents.PLAYER_RESPAWN.register((player, end) -> {
-            for (UUID id : Momlove.config.stream().toList()){
-                if (player.getUUID() == id){
-                    player.getInventory().replaceWith(inventory);
-                }
+        ServerPlayerEvents.AFTER_RESPAWN.register((old, newPlayer, end) -> {
+            if (Momlove.config.contains(newPlayer.getUUID())){
+                newPlayer.getInventory().replaceWith(old.getInventory());
+                newPlayer.displayClientMessage(new TextComponent("hello"), true);
             }
         });
 

@@ -66,4 +66,9 @@ public class ConfigHandler {
             e.printStackTrace();
         }
     }
+
+    public static void onChange(){
+        ConfigHandler.save(Momlove.config);
+        Momlove.config = ConfigHandler.load();
+    }
 }

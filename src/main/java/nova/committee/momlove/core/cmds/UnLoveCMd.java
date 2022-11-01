@@ -29,7 +29,7 @@ public class UnLoveCMd {
                 context.getSource().sendFailure(new TranslatableComponent("momlove.unlove.failure"));
             }
         }
-        ConfigHandler.save(Momlove.config);
+        ConfigHandler.onChange();
         return 0;
     }
 }

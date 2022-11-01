@@ -43,8 +43,6 @@ public class Momlove implements ModInitializer {
     }
     private void onServerStarted(MinecraftServer server) {
         config = ConfigHandler.load();//读取配置
-        PlayerEventsHandler.init();
-
     }
 
     private void onServerStopping(MinecraftServer server) {
