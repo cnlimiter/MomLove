@@ -1,0 +1,7 @@
+{
+
+  "momlove.love.success": "Mom watches you!",
+  "momlove.love.failure": "Mom isn't looking at you!",
+  "momlove.unlove.success": "You were abandoned by mom!",
+  "momlove.unlove.failure": "Mom still loves you!"
+}
