@@ -26,17 +26,17 @@ public final class PlayerEvents {
         }
     });
 
-    public static final Event<Player_Death> PLAYER_DEATH = EventFactory.createArrayBacked(Player_Death.class, callbacks -> (source, player) -> {
+    public static final Event<Player_Death> PLAYER_DROP_DEATH = EventFactory.createArrayBacked(Player_Death.class, callbacks -> (source, player) -> {
         for (Player_Death callback : callbacks) {
-            callback.onDeath(source, player);
+            if (callback.onDeath(source, player)) {
+                return true;
+            }
         }
+        return false;
+
     });
 
-    public static final Event<Player_Respawn> PLAYER_RESPAWN = EventFactory.createArrayBacked(Player_Respawn.class, callbacks -> (player, end) -> {
-        for (Player_Respawn callback : callbacks) {
-            callback.onRespawn(player, end);
-        }
-    });
+
     public static final Event<Player_Change_Dimension> PLAYER_CHANGE_DIMENSION = EventFactory.createArrayBacked(Player_Change_Dimension.class, callbacks -> (world, player) -> {
         for (Player_Change_Dimension callback : callbacks) {
             callback.onChangeDimension(world, player);
@@ -85,13 +85,9 @@ public final class PlayerEvents {
 
     @FunctionalInterface
     public interface Player_Death {
-        void onDeath(DamageSource source, ServerPlayer player);
+        boolean onDeath(DamageSource source, ServerPlayer player);
     }
 
-    @FunctionalInterface
-    public interface Player_Respawn {
-        void onRespawn(ServerPlayer player, boolean isEnd);
-    }
 
     @FunctionalInterface
     public interface Player_Change_Dimension {

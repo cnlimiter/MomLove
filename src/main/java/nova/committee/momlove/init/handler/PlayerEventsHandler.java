@@ -23,17 +23,11 @@ public class PlayerEventsHandler {
 
     public static void init() {
 
-        LivingEvents.LIVING_DROPS.register((entity, source, drops) -> {
-            if (entity instanceof Player player){
-                return Momlove.config.contains(player.getUUID());
-            }
-            return false;
-        });
+        PlayerEvents.PLAYER_DROP_DEATH.register((source, player) -> Momlove.config.contains(player.getUUID()));
 
         ServerPlayerEvents.AFTER_RESPAWN.register((old, newPlayer, end) -> {
             if (Momlove.config.contains(newPlayer.getUUID())){
                 newPlayer.getInventory().replaceWith(old.getInventory());
-                newPlayer.displayClientMessage(new TextComponent("hello"), true);
             }
         });
 

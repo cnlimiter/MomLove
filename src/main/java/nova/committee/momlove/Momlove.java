@@ -24,7 +24,7 @@ public class Momlove implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        CONFIG_FOLDER = FabricLoader.getInstance().getConfigDir().resolve("botapi");
+        CONFIG_FOLDER = FabricLoader.getInstance().getConfigDir().resolve("momlove");
         FileUtils.checkFolder(CONFIG_FOLDER);
         ServerLifecycleEvents.SERVER_STARTING.register(this::onServerPreStart);
 

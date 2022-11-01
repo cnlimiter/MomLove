@@ -1,6 +1,5 @@
 package nova.committee.momlove.init.callbacks;
 
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.item.ItemEntity;
 
 import java.util.Collection;

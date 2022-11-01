@@ -1,12 +1,18 @@
 package nova.committee.momlove.init.mixins;
 
+import com.mojang.authlib.GameProfile;
+import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import nova.committee.momlove.init.callbacks.PlayerEvents;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -18,7 +24,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  */
 
 @Mixin(value = ServerPlayer.class, priority = 1001)
-public class ServerPlayerMixin {
+public abstract class ServerPlayerMixin extends Player {
+    @Shadow public abstract void initInventoryMenu();
+
+    public ServerPlayerMixin(Level level, BlockPos blockPos, float f, GameProfile gameProfile) {
+        super(level, blockPos, f, gameProfile);
+    }
+
     @Inject(method = "tick()V", at = @At(value = "HEAD"))
     public void ServerPlayer_tick(CallbackInfo ci) {
         ServerPlayer player = (ServerPlayer) (Object) this;
@@ -27,12 +39,12 @@ public class ServerPlayerMixin {
         PlayerEvents.PLAYER_TICK.invoker().onTick(world, player);
     }
 
-    @Inject(method = "die(Lnet/minecraft/world/damagesource/DamageSource;)V", at = @At(value = "HEAD"))
-    public void ServerPlayer_die(DamageSource damageSource, CallbackInfo ci) {
-        ServerPlayer player = (ServerPlayer) (Object) this;
-        ServerLevel world = (ServerLevel) player.getCommandSenderWorld();
+    @Redirect(method = "die(Lnet/minecraft/world/damagesource/DamageSource;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerPlayer;dropAllDeathLoot(Lnet/minecraft/world/damagesource/DamageSource;)V"))
+    public void ServerPlayer_die(ServerPlayer instance, DamageSource source) {
 
-        PlayerEvents.PLAYER_DEATH.invoker().onDeath(damageSource, player);
+        if(!PlayerEvents.PLAYER_DROP_DEATH.invoker().onDeath(source, instance))
+            this.dropAllDeathLoot(source);
+
     }
 
     @Inject(method = "changeDimension(Lnet/minecraft/server/level/ServerLevel;)Lnet/minecraft/world/entity/Entity;", at = @At(value = "RETURN"))
