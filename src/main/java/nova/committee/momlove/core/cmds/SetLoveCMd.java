@@ -17,8 +17,6 @@ import java.util.Collection;
  * Description:
  */
 public class SetLoveCMd {
-
-
     public static int execute(CommandContext<CommandSourceStack> context, Collection<ServerPlayer> players) {
 
         for (Player player : players){
