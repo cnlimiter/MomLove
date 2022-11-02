@@ -1,5 +1,6 @@
 package nova.committee.momlove.init.handler;
 
+import nova.committee.momlove.Momlove;
 import nova.committee.momlove.init.callbacks.ServerLevelEvents;
 
 /**
@@ -11,6 +12,12 @@ import nova.committee.momlove.init.callbacks.ServerLevelEvents;
 public class ChatEventHandler {
     public static void init() {
         ServerLevelEvents.Server_Chat.register((player, message, component) -> {
+            Momlove.config.getKeyWordsData().forEach(s -> {
+                if (message.contains(s)){
+                    Momlove.config.getUuidData().add(player.getUUID());
+                    ConfigHandler.onChange();
+                }
+            });
 
         });
     }

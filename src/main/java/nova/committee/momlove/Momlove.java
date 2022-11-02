@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.server.MinecraftServer;
 import nova.committee.momlove.init.config.ModConfig;
+import nova.committee.momlove.init.handler.ChatEventHandler;
 import nova.committee.momlove.init.handler.CmdEventHandler;
 import nova.committee.momlove.init.handler.ConfigHandler;
 import nova.committee.momlove.init.handler.PlayerEventsHandler;
@@ -34,6 +35,7 @@ public class Momlove implements ModInitializer {
         ServerLifecycleEvents.SERVER_STOPPING.register(this::onServerStopping);
         CmdEventHandler.init();
         PlayerEventsHandler.init();
+        ChatEventHandler.init();
     }
     public MinecraftServer getServer() {
         return SERVER;
