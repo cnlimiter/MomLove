@@ -56,6 +56,7 @@ public abstract class LivingEntityMixin extends Entity implements EntityExtensio
     @Inject(method = "dropAllDeathLoot", at = @At("TAIL"))
     private void spawnDropsTAIL(DamageSource source, CallbackInfo ci) {
         Collection<ItemEntity> drops = this.captureDrops(null);
+        if (drops == null) return;
         if (!LivingEvents.LIVING_DROPS.invoker().onDrop((LivingEntity) (Object) this, source, drops))
             drops.forEach(e -> level.addFreshEntity(e));
     }
