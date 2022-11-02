@@ -4,11 +4,12 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.server.MinecraftServer;
+import nova.committee.momlove.init.config.ModConfig;
 import nova.committee.momlove.init.handler.CmdEventHandler;
 import nova.committee.momlove.init.handler.ConfigHandler;
-import nova.committee.momlove.init.ModConfig;
 import nova.committee.momlove.init.handler.PlayerEventsHandler;
 import nova.committee.momlove.utils.FileUtils;
+
 import java.nio.file.Path;
 
 /**

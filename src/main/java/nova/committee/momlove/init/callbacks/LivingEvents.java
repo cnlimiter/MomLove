@@ -5,7 +5,6 @@ import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
 import java.util.Collection;
 

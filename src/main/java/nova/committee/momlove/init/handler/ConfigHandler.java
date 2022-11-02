@@ -4,7 +4,7 @@ package nova.committee.momlove.init.handler;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import nova.committee.momlove.Momlove;
-import nova.committee.momlove.init.ModConfig;
+import nova.committee.momlove.init.config.ModConfig;
 import org.apache.commons.io.FileUtils;
 
 import java.io.IOException;

@@ -23,7 +23,7 @@ public class UnLoveCMd {
 
         for (Player player : players){
             try {
-                Momlove.config.remove(player.getUUID());
+                Momlove.config.getUuidData().remove(player.getUUID());
                 context.getSource().sendSuccess(new TranslatableComponent("momlove.unlove.success"), true);
             } catch (Exception e){
                 context.getSource().sendFailure(new TranslatableComponent("momlove.unlove.failure"));

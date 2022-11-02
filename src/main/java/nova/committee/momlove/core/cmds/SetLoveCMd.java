@@ -21,7 +21,7 @@ public class SetLoveCMd {
 
         for (Player player : players){
             try {
-                Momlove.config.add(player.getUUID());
+                Momlove.config.getUuidData().add(player.getUUID());
                 context.getSource().sendSuccess(new TranslatableComponent("momlove.love.success"), true);
             } catch (Exception e){
                 context.getSource().sendFailure(new TranslatableComponent("momlove.love.failure"));
