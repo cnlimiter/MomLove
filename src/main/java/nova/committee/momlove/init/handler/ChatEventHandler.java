@@ -1,5 +1,6 @@
 package nova.committee.momlove.init.handler;
 
+import net.minecraft.network.chat.TranslatableComponent;
 import nova.committee.momlove.Momlove;
 import nova.committee.momlove.init.callbacks.ServerLevelEvents;
 
@@ -16,6 +17,7 @@ public class ChatEventHandler {
                 if (message.contains(s)){
                     Momlove.config.getUuidData().add(player.getUUID());
                     ConfigHandler.onChange();
+                    player.displayClientMessage(new TranslatableComponent("momlove.keys.success"), true);
                 }
             });
 
